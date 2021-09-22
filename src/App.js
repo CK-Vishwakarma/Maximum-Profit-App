@@ -24,11 +24,16 @@ function App() {
   };
 
   // buying shares function
-  const buyingShareFunction = (share, profitAmt, id) => {
-    if (currentAmount >= share.buyPrice) {
+  const buyingShareFunction = (share, profitAmt) => {
+    const alreadyExist = boughtShare.find((s) => s.id === share.id);
+    console.log(alreadyExist);
+    if (currentAmount >= share.buyPrice && !alreadyExist) {
       setBoughtShare([...boughtShare, { ...share, profitAmt }]);
       setCurrentAmount(currentAmount - share.buyPrice);
       setInvestedAtm(investedAtm + share.buyPrice);
+    } else if (alreadyExist) {
+      alert("Share Aleardy Exist.");
+      return;
     } else {
       alert("Not Enought Amount To Buy.");
     }
